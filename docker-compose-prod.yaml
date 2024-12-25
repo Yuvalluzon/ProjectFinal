@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+  flask-app:
+    image: 863254239753.dkr.ecr.eu-west-2.amazonaws.com/yuval-klechevsky-repo:${New_tag}
+    links:
+      - mongodb
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+  mongodb:
+    build:
+      context: .
+      dockerfile: mongo.dockerfile
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=Aa123456
+      - MONGO_INITDB_DATABASE=GYM_mongodb
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+       test: echo 'db.runCommand("ping").ok'
+       interval: 10s
+       timeout: 10s
+       retries: 5
+  
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - flask-app
+volumes:
+  mongo-data:

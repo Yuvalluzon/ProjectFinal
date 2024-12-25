@@ -1,0 +1,94 @@
+Overview
+========
+The portfolio project should contain/demonstrate several aspects:
+- Your own application code - around 150-300 lines.
+- CI/CD (i.e. with branches, logic, etc.).
+- Public cloud based infrastructure.
+- Microservice based deployment/architecture.
+
+
+For interviews
+==============
+When going to an interview, it's important to be able to *demonstrate* our professional abilities. This provides a platform for an intelligent and in-depth discussion around material that represents our personal abilities.
+Presentation notes:
+- Offer to present your portfolio project (or part of it) early in an interview.
+- Before presenting, make sure the services are up and running and the source code/configuration is clean and available to reference.
+- It's great to start with two diagrams:
+  - Application architecture.
+  - CI/CD flow.
+
+
+Technology stack
+================
+*Marked* options are our preferred recommendations.
+
+Ticketing: *Trello*/Jira
+Development: Python (Django/*Flask*) with REST API
+Containerization: Docker
+Docker image registry: *ECR*, GCR, Nexus, Artifactory
+Source Code Management: AWS CodeCommit, GitLab, *GitHub*, Bitbucket, CodeBerg
+DataBase: *Mongo*/Elasticsearch/MySQL/Postgres
+Scripting: *Bash*
+Bonus: Infrastructure as Code: *Terraform*:
+	- Cloud provider
+Cloud: *AWS*/GCP/Azure:
+- Compute
+- Storage
+- Networking
+- Security 
+- Load balancing
+
+Ingress: Nginx container
+CI/CD: *Jenkins*, Github Actions, GitLab CI, Azure DevOps, Code pipeline
+
+
+DevOps Portfolio details
+========================
+Git
+---
+- Implement all work in *private* git repositories. Example names and repo setup:
+  - `application`
+  - `infra` (for Terraform)
+- `main` branch is for running releases, `feature/*` branches are for development.
+
+Documentation
+-------------
+- You should add a `README.md` for each of your repos (and possibly relevant sud-directories). This will help when re-visiting and presenting in the future.
+
+Development
+-----------
+- Write a simple application that exposes a REST API service which interacts with a database.
+- Examples abilities:
+  - `POST /person/{id}` with body containing some details as JSON.
+  - `PUT /person/{id}` same thing exactly, but updates existing person.
+  - `DELETE /person/{id}` remove an entity from database.
+  - `GET /person/{id}` to return specific JSON object.
+  - `GET /person` to get a JSON array of people ids.
+  - `GET /metrics` use later, for monitoring.
+- Prepare some static files that will be served by Nginx.
+
+Docker
+------
+- Create a multi-stage docker file to build the application's lean runtime Docker image.
+- Create a docker-compose file to start the application, to be used for local development and for tests in CI - see below.
+
+CI/CD
+-----
+- Implement CI for the application using a multibranch pipeline and publish to your chosen container registry.
+- Include end-to-end testing (at least one additional test, beyond sanity) as part of the build.
+- Stages:
+  1. Clone
+  2. Build (Docker image)
+  3. Unit test (if there are any)
+  4. End-to-end test (docker-compose up, POST, GET, DELETE, GET, docker-compose down...) [`main` & `feature/*`]
+  5. Tag [`main` only]
+  6. Publish [`main` only]
+  7. Deploy [`main` only] (update image tag in production machines)
+
+Architecture
+------------
+- Draw the architecture of the application in cloud. Include several instances, a Load Balancer, Networking, etc.
+
+Bonus: Terraform
+----------------
+- Provision all cloud services with Terraform.
