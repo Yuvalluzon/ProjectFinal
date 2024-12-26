@@ -19,6 +19,7 @@ pipeline {
                 }
             }
             steps {
+                echo "${env.BRANCH_NAME}"
                 deleteDir()
                 checkout scm
             }
