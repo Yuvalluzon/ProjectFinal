@@ -7,4 +7,4 @@ cd GYM-protfolio
 docker compose -f docker-compose-prod.yaml  build --no-cache
 docker compose -f docker-compose-prod.yaml up -d
 sleep 10
-curl 18.168.150.55:80 
+curl 54.237.202.219:80 
