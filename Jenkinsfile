@@ -12,12 +12,12 @@ pipeline {
     }
     stages{
         stage("checkout") {
-            when {
-                anyOf {
-                    branch 'main'
-                    branch 'feature/*'
-                }
-            }
+            // when {
+            //     anyOf {
+            //         branch 'main'
+            //         branch 'feature/*'
+            //     }
+            // }
             steps {
                 echo "${env.BRANCH_NAME}"
                 deleteDir()
