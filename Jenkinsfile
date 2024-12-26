@@ -33,16 +33,11 @@ pipeline {
             // }
               steps{
                 script{
-                    withCredentials([
-                        string(CredentialsId:"AWS_ACCESS_KEY_ID", variable:"AWS_ACCESS_KEY_ID"),
-                           string(CredentialsId:"AWS_SECRET_ACCESS_KEY", variable:"AWS_SECRET_ACCESS_KEY")
-                    ]) {
-                        // $class: 'AmazonWebServicesCredentialsBinding',credentialsId: "57795a39-caf6-44a7-96de-ebdd90b1635e  ",accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                        // secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                    withCredentials([[
+                        $class: 'AmazonWebServicesCredentialsBinding',credentialsId: "0200c83a-b69b-406a-95dd-0116c258de04",accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     sh  """
-                        aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
-                        aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
-                        aws sts get-caller-identity
+                         
                         aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com 
 
                         """
