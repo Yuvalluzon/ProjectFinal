@@ -26,12 +26,12 @@ pipeline {
             }
         }
         stage("AWS login"){
-            when {
-                anyOf {
-                    branch 'main'
-                    branch 'feature/*'
-                }
-            }
+            // when {
+            //     anyOf {
+            //         branch 'main'
+            //         branch 'feature/*'
+            //     }
+            // }
               steps{
                 script{
                     withCredentials([[
