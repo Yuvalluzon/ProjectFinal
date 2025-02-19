@@ -46,12 +46,12 @@ pipeline {
             }
         }
         stage("Build Containers"){
-            when {
-                anyOf {
-                    branch 'main'
-                    branch 'feature/*'
-                }
-            }
+            // when {
+            //     anyOf {
+            //         branch 'main'
+            //         branch 'feature/*'
+            //     }
+            // }
             steps{
 
                 sh  "docker build -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME} ."
@@ -60,12 +60,12 @@ pipeline {
             }          
         }
         stage("Unit-test"){
-            when {
-                anyOf {
-                    branch 'main'
-                    branch 'feature/*'
-                }
-            }
+            // when {
+            //     anyOf {
+            //         branch 'main'
+            //         branch 'feature/*'
+            //     }
+            // }
             steps{
             sh  """
                 sleep 5
@@ -75,12 +75,12 @@ pipeline {
             }
         }
         stage("E2E test app"){
-            when {
-                anyOf {
-                    branch 'main'
-                    branch 'feature/*'
-                }
-            }
+            // when {
+            //     anyOf {
+            //         branch 'main'
+            //         branch 'feature/*'
+            //     }
+            // }
             steps{
                 sh  """ 
                     cd tests
@@ -99,9 +99,9 @@ pipeline {
             }   
         }
         stage("Tagging commit and tags"){
-            when {
-                branch 'main'
-            }
+            // when {
+            //     branch 'main'
+            // }
             steps{ 
                 script{
                         withCredentials([gitUsernamePassword(credentialsId: 'dcf0d905-221e-4fb1-8e9c-e037187c2bbf',gitToolName: 'Default')]) {
@@ -128,9 +128,9 @@ pipeline {
                 }
         }
         stage("Push to ECR"){
-            when {
-                branch 'main'
-            }
+            // when {
+            //     branch 'main'
+            // }
             steps{
                 script{
                     sh "docker tag  ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}  ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${New_tag} "
@@ -139,9 +139,9 @@ pipeline {
             }
         }
         stage("Deploy to Prodaction"){
-            when {
-                branch 'main'
-            }
+            // when {
+            //     branch 'main'
+            // }
             steps{
                 script{
                     sh "./copy.sh ${New_tag}"
