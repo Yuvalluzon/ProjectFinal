@@ -11,16 +11,14 @@ pipeline {
         REPOSITORY_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
     stages{
-        stage('Debug Branch') { steps { script { echo "Detected Branch: ${env.BRANCH_NAME}" sh 'git branch --show-current || echo "No branch detected"' } } }
         stage("checkout") {
-            when {
-                anyOf {
-                    branch 'main'
-                    branch 'feature/*'
-                }
-            }
+            // when {
+            //     anyOf {
+            //         branch 'main'
+            //         branch 'feature/*'
+            //     }
+            // }
             steps {
-                sh 'git branch'
                 echo "${env.BRANCH_NAME}"
                 deleteDir()
                 checkout scm
