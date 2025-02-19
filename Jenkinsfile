@@ -12,25 +12,26 @@ pipeline {
     }
     stages{
         stage("checkout") {
-            // when {
-            //     anyOf {
-            //         branch 'main'
-            //         branch 'feature/*'
-            //     }
-            // }
+            when {
+                anyOf {
+                    branch 'main'
+                    branch 'feature/*'
+                }
+            }
             steps {
+                git --version
                 echo "${env.BRANCH_NAME}"
                 deleteDir()
                 checkout scm
             }
         }
         stage("AWS login"){
-            // when {
-            //     anyOf {
-            //         branch 'main'
-            //         branch 'feature/*'
-            //     }
-            // }
+            when {
+                anyOf {
+                    branch 'main'
+                    branch 'feature/*'
+                }
+            }
               steps{
                 script{
                     withCredentials([[
@@ -46,12 +47,12 @@ pipeline {
             }
         }
         stage("Build Containers"){
-            // when {
-            //     anyOf {
-            //         branch 'main'
-            //         branch 'feature/*'
-            //     }
-            // }
+            when {
+                anyOf {
+                    branch 'main'
+                    branch 'feature/*'
+                }
+            }
             steps{
 
                 sh  "docker build -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME} ."
@@ -60,27 +61,27 @@ pipeline {
             }          
         }
         stage("Unit-test"){
-            // when {
-            //     anyOf {
-            //         branch 'main'
-            //         branch 'feature/*'
-            //     }
-            // }
+            when {
+                anyOf {
+                    branch 'main'
+                    branch 'feature/*'
+                }
+            }
             steps{
             sh  """
                 sleep 5
-                curl 54.237.202.219:80
+                curl 3.85.43.195:80
                 
                 """
             }
         }
         stage("E2E test app"){
-            // when {
-            //     anyOf {
-            //         branch 'main'
-            //         branch 'feature/*'
-            //     }
-            // }
+            when {
+                anyOf {
+                    branch 'main'
+                    branch 'feature/*'
+                }
+            }
             steps{
                 sh  """ 
                     cd tests
@@ -99,9 +100,9 @@ pipeline {
             }   
         }
         stage("Tagging commit and tags"){
-            // when {
-            //     branch 'main'
-            // }
+            when {
+                branch 'main'
+            }
             steps{ 
                 script{
                         withCredentials([gitUsernamePassword(credentialsId: 'dcf0d905-221e-4fb1-8e9c-e037187c2bbf',gitToolName: 'Default')]) {
@@ -139,9 +140,9 @@ pipeline {
             }
         }
         stage("Deploy to Prodaction"){
-            // when {
-            //     branch 'main'
-            // }
+            when {
+                branch 'main'
+            }
             steps{
                 script{
                     sh "./copy.sh ${New_tag}"
