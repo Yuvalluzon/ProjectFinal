@@ -19,7 +19,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'git --version'
+                sh 'git branch'
                 echo "${env.BRANCH_NAME}"
                 deleteDir()
                 checkout scm
