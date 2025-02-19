@@ -53,7 +53,7 @@ pipeline {
             //     }
             // }
             steps{
-                sh "sudo usermod -aG docker jenkins"
+                sh "usermod -aG docker jenkins"
                 sh  "docker build -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME} ."
                 sh  "docker-compose -f docker-compose.yaml build --no-cache"
                 sh  "docker-compose -f docker-compose.yaml up -d"
