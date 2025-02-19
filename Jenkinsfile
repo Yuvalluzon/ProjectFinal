@@ -34,7 +34,7 @@ pipeline {
               steps{
                 script{
                     withCredentials([[
-                        $class: 'AmazonWebServicesCredentialsBinding',credentialsId: "0200c83a-b69b-406a-95dd-0116c258de04",accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                        $class: 'AmazonWebServicesCredentialsBinding',credentialsId: "5e49d592-b4c4-48d5-8e3b-5be7afb8ade2",accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     sh  """
                          
